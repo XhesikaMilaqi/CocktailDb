@@ -13,3 +13,10 @@ allBoxes.forEach(box => {
     menu.classList.toggle('show')
   })
 })
+
+const loup = document.getElementById('btn-loup')
+const input = document.getElementById('inputs')
+
+loup.addEventListener('click', function () {
+  input.classList.toggle('show')
+})

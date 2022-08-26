@@ -1,16 +1,16 @@
 <template>
-  <!-- <router-link> -->
+  <router-link to="/detailsView">
     <div class="cocktail">
       <img :src="strDrinkThumb" alt="">
       <h3>{{ strDrink }}</h3>
     </div>
-  <!-- </router-link> -->
+  </router-link>
 </template>
 
 <script>
 export default {
   name: 'AllCocktails',
-  props: ['idDrink', 'strDrink', 'strDrinkThumb']
+  props: ['idDrink', 'strDrink', 'strDrinkThumb', 'strCategory', 'strInstructions']
 }
 </script>
 
