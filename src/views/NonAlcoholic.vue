@@ -26,24 +26,39 @@ export default {
     async LatestCocktails () {
       const resi = await apiService.getLatestC()
       const latest = await resi.json()
-      this.data = latest.drinks.slice(0, 15)
+      this.data = latest.drinks
       console.log(this.data)
     }
   }
 }
 </script>
 <style>
-.about {
+.about{
   display: flex;
   flex-wrap: wrap;
   width: 90%;
   margin: 100px auto;
 }
-.about > .latest{
+.about > a > .latest{
   padding: 20px;
   margin: 0 auto;
 }
 .latest img{
   width: 300px;
+  border-radius: 20%;
+}
+.about > a {
+  text-decoration: none;
+  color: black;
+  font-family: 'Combo';
+  margin: 0 auto;
+}
+@media screen and (max-width:400px){
+  .about > a > .latest > img{
+    width: 250px;
+  }
+  .about > a > .latest {
+    padding: 0;
+  }
 }
 </style>

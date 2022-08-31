@@ -1,15 +1,13 @@
 <template class="body">
-  <nav>
-    <router-link to="/"><img src="./assets/logo.png" alt="logo" class="logo-header"></router-link>
-    <div id="links">
-      <router-link to="/">Home</router-link>
-      <router-link to="/nonalcoholic">Non-Alcoholic</router-link>
-    </div>
-    <div id="inputs">
-      <input type="text" placeholder=" search cocktail by name..." v-model="search" @input="search = $event.target.value">
-      <!-- <input type="text" placeholder=" search cocktail by ingredient..." v-model="searchI" @input="search = $event.target.valueL"> -->
-    </div>
-    <img src="./assets/img/loup.png" alt="loup-recherche" id="btn-loup">
+  <!-- <div class="ingrdients" v-if="searchI !== ''">
+    <AllIngredients v-for="item in dataList" :key="item.idIngredient" :idIngredient="item.idIngredient" :strIngredient1="item.strIngredient1"></AllIngredients>
+  </div> -->
+  <div id="links">
+    <router-link to="/">Home</router-link>
+    <router-link to="/nonalcoholic">Non-Alcoholic</router-link>
+  </div>
+  <img src="./assets/img/loup.png" alt="loup-recherche" id="btn-loup">
+  <div class="around">
     <button class="box b1">
       <div class="container-lignes">
         <div class="ligne"></div>
@@ -17,57 +15,32 @@
         <div class="ligne"></div>
       </div>
     </button>
-  </nav>
-  <div class="search-card" v-if="search !== ''">
-    <AllCocktails v-for="item in data" :key="item.idDrink" :idDrink="item.idDrink" :strDrink="item.strDrink" :strDrinkThumb="item.strDrinkThumb"></AllCocktails>
   </div>
-  <div class="list-ingredient" v-if="search !== ''">
-    <AllIngredients v-for="item in dataList !== null" :key="item.idIngredient" :idIngredient="item.idIngredient" :strIngredient="item.strIngredient"></AllIngredients>
-  </div>
-  <router-view/>
+  <router-view :key="$route.fullpath"/>
 </template>
 
 <script>
-import AllCocktails from '@/components/AllCocktails.vue'
+// import AllCocktails from '@/components/AllCocktails.vue'
 import ApiService from '@/services/ApiService.js'
-import AllIngredients from '@/components/AllIngredients.vue'
+// import AllIngredients from '@/components/AllIngredients.vue'
 
 const apiService = new ApiService()
 
 export default {
   name: 'App',
   components: {
-    AllCocktails,
-    AllIngredients
+    // AllCocktails
+    // AllIngredients
   },
   data () {
     return {
-      data: null,
-      dataI: null,
-      dataList: null,
-      search: '',
-      searchI: ''
-    }
-  },
-  watch: {
-    search (value) {
-      this.searchCocktail(value)
-      console.log(value, this.data)
-    },
-    searchI (valueL) {
-      this.searchIngredient(valueL)
-      // console.log(valueL)
+      dataList: null
     }
   },
   mounted () {
     this.AllIngredients()
   },
   methods: {
-    async searchCocktail (search) {
-      const res = await apiService.getSearchC(search)
-      const recherche = await res.json()
-      this.data = recherche.drinks.slice(0, 20)
-    },
     async AllIngredients () {
       const resi = await apiService.getListIngredient()
       const listI = await resi.json()
@@ -76,7 +49,7 @@ export default {
     async searchIngredient (searchList) {
       const res = await apiService.getSearchIngredient(searchList)
       const rechercheI = await res.json()
-      this.dataI = rechercheI.ingredients[0]
+      this.dataI = rechercheI.ingredients
     }
   }
 }
@@ -92,7 +65,9 @@ export default {
   color: #2c3e50;
   overflow: hidden;
 }
-/* Menu burger */
+.around{
+  position: relative;
+}
 .box{
   margin: 10px;
   width: 60px;
@@ -100,7 +75,9 @@ export default {
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  position: relative;
+  position: absolute;
+  right: 0;
+  top: 30px;
   background-color: transparent;
   z-index: 11;
 }
@@ -159,66 +136,14 @@ export default {
 .show{
   display: block !important;
 }
-/* search card */
-.search-card{
-  background-color: #2c3e509a;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 20px;
-}
-.search-card > .cocktail{
-  width: 400px;
-  padding: 30px;
-  margin: 0 auto;
-}
-.search-card > .cocktail >h3{
-  font-family: 'Combo';
-}
-/* menu */
-nav {
-  padding: 40px;
-  display: flex;
-  height: 70px;
-  line-height: 70px;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto;
-  position: relative;
-}
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-  text-decoration: none;
-  color: #CA3C39;
-  font-size: 1.3rem;
-  font-family: 'Combo';
-}
-
-nav a.router-link-exact-active {
-  color: #60BFCF;
-}
-
-body #app{
-  background: linear-gradient(#F29375, #EEDF91);
-}
-nav >  a  > .logo-header{
-  width:150px;
-}
-nav input{
-  width: 250px;
-  background-color: #d9d9d9af;
-  border: #CA3C39 solid 0.5px;
-  border-radius: 30px;
-  height: 40px;
-  line-height: 40px;
-  font-family: 'Combo';
-  margin: 10px;
-}
 #links > a {
   margin: 50px;
   display: flex;
+  text-decoration: none;
+  font-family: 'Combo';
+  color: black;
+  font-size: 1.3rem;
 }
 #links{
   display: none;
@@ -232,35 +157,5 @@ nav input{
   background-color: #dad37ce3;
   z-index: 10;
   padding-top: 100px;
-}
-#btn-loup{
-  cursor: pointer;
-  display: none;
-}
-#btn-loup:hover{
-  transform: scale(1.1);
-}
-@media screen and (max-width:1120px) {
-  nav input{
-    width: 200px;
-  }
-}
-@media screen and (max-width: 770px) {
-  nav input{
-    width: 150px;
-  }
-}
-@media screen and (max-width: 670px) {
-  #btn-loup{
-    display: block;
-    position: absolute;
-    right: 25%;
-    width: 45px;
-    top: 30%;
-  }
-  #inputs{
-    display: none;
-    margin-top: 120px;
-  }
 }
 </style>

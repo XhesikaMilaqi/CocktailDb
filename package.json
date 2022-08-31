@@ -11,7 +11,9 @@
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
     "vue-pagination-tw": "^0.1.2",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vue3-carousel": "^0.1.46",
+    "vueperslides": "^3.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

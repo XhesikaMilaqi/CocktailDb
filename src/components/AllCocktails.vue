@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/detailsView">
+  <router-link :to="{ name: 'detailsView', params: { id: idDrink} }">
     <div class="cocktail">
       <img :src="strDrinkThumb" alt="">
       <h3>{{ strDrink }}</h3>
@@ -10,7 +10,7 @@
 <script>
 export default {
   name: 'AllCocktails',
-  props: ['idDrink', 'strDrink', 'strDrinkThumb', 'strCategory', 'strInstructions']
+  props: ['idDrink', 'strDrink', 'strDrinkThumb', 'strCategory', 'strInstructions', 'strIngredient1', 'strIngredient2', 'strIngredient3', 'strIngredient4', 'strIngredient6']
 }
 </script>
 
@@ -29,8 +29,16 @@ export default {
 }
 .cocktail img{
   width: 300px;
+  border-radius: 20%;
 }
 .cocktail > h3{
   font-size: 1.2rem;
+  text-decoration: none;
+}
+.list-card > a{
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  margin: 0 auto;
 }
 </style>
