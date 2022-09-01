@@ -50,13 +50,14 @@ export default {
       id: this.$route.params.id
     }
   },
+  created () {
+    this.detailsView(this.id)
+    console.log(this.id)
+  },
   watch: {
     search (value) {
       this.searchCocktail(value)
     }
-  },
-  created () {
-    this.detailsView(this.id)
   },
   methods: {
     async detailsView (id) {
@@ -69,7 +70,7 @@ export default {
       const res = await apiService.getSearchC(search)
       const recherche = await res.json()
       this.dataP = recherche.drinks
-      console.log(this.dataP)
+      // console.log(recherche.drinks)
     }
   }
 }

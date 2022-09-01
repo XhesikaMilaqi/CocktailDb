@@ -1,11 +1,12 @@
 <template>
+  <!-- LOGO/ HEADER / MENU -->
   <nav>
     <router-link to="/"><img src="../assets/logo.png" alt="logo" class="logo-header"></router-link>
     <div id="inputs">
       <input type="text" placeholder=" search cocktail by name..." v-model="search" @input="search = $event.target.value">
-      <!-- <input type="text" placeholder=" search cocktail by ingredient..." v-model="searchI" @input="search = $event.target.valueL"> -->
     </div>
   </nav>
+  <!--BARRE DE RECHERCHE -->
   <div class="search-card" v-if="search !== ''">
     <AllCocktails v-for="item in dataP" :key="item.idDrink" :idDrink="item.idDrink" :strDrink="item.strDrink" :strDrinkThumb="item.strDrinkThumb"></AllCocktails>
   </div>
@@ -23,8 +24,8 @@
         <div>
           <div id="slider-img">
             <Carousel :items-to-show="1" :wrap-around="true">
-              <Slide v-for="slide in dataC" :key="slide">
-                <img :src="slide.strDrinkThumb" alt="">
+              <Slide v-for="slide in dataC" :key="slide.idDrink" :id="slide.idDrink">
+                <router-link :to="{ name: 'detailsView', params: { id: slide.idDrink} }"><img :src="slide.strDrinkThumb" alt=""></router-link>
                 <div class="carousel__item">{{ slide.strDrink }}</div>
               </Slide>
               <template #addons>
@@ -50,10 +51,12 @@
         <img src="../assets/img/pasteque.png" alt="pasteque-img" class="pasteque">
       </div>
     </div>
+    <!-- LISTE INGREDIENTS -->
     <h2 class="p-ingredients">Popular Ingredients</h2>
     <div class="ingredients">
       <AllIngredients v-for="items in dataI" :key="items.idIngredient" :idIngredient="items.idIngredient" :strIngredient1="items.strIngredient1"></AllIngredients>
     </div>
+    <!-- FOOTER -->
     <footer>
       <ul>
         <li><a href=""> About</a></li>
@@ -73,6 +76,7 @@ import AllCocktails from '@/components/AllCocktails.vue'
 import ApiService from '@/services/ApiService.js'
 // import LatestCocktails from '@/components/LatestCocktails.vue'
 import AllIngredients from '@/components/AllIngredients.vue'
+// SCRIPT CAROUSEL
 import { defineComponent } from 'vue'
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 
@@ -91,7 +95,7 @@ export default defineComponent({
   data () {
     return {
       data: null,
-      dataC: null,
+      dataC: [],
       dataI: null,
       dataP: null,
       search: '',
@@ -101,9 +105,6 @@ export default defineComponent({
   watch: {
     search (value) {
       this.searchCocktail(value)
-    },
-    searchI (valueL) {
-      this.searchIngredient(valueL)
     }
   },
   mounted () {
@@ -122,7 +123,7 @@ export default defineComponent({
       const resi = await apiService.getLatestC()
       const latest = await resi.json()
       this.dataC = latest.drinks
-      // console.log(this.dataC)
+      console.log(this.dataC)
     },
     async AllIngredients () {
       const res = await apiService.getListIngredient()
@@ -142,6 +143,7 @@ export default defineComponent({
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Combo&display=swap');
 @import url('vue3-carousel/dist/carousel.css');
+
 /* carousel */
 .carousel img{
   width: 400px;
@@ -193,8 +195,8 @@ export default defineComponent({
   z-index: 1;
   right: -60px;
   rotate: 350deg;
-  opacity: 0.8;
   top: 50px;
+  filter: saturate(1.3);
 }
 .feuille-petit{
   position: absolute;
@@ -203,6 +205,7 @@ export default defineComponent({
   rotate: 30deg;
   width: 500px;
   top: 0;
+  filter: saturate(1.3);
 }
 .citron{
   position: absolute;
@@ -211,6 +214,7 @@ export default defineComponent({
   bottom: -10;
   z-index: 4;
   opacity: 0.9;
+  filter: saturate(1.2);
 }
 .slider-card{
   width: 80%;
@@ -222,6 +226,7 @@ export default defineComponent({
   padding: 30px;
   position: relative;
   z-index: 3;
+  backdrop-filter: blur(5px);
 }
 .slider-text{
   width: 40%;
@@ -289,6 +294,7 @@ export default defineComponent({
   bottom: -320px;
   left: -200px;
   rotate: 300deg;
+  width: 500px;
 }
 /* Ingrediens */
 .ingredients{
@@ -321,6 +327,7 @@ export default defineComponent({
   transform: scale(1.2);
   transition: transform 0.4s ease-in-out;
 }
+
 /* footer */
 footer{
   position: relative;
@@ -341,6 +348,7 @@ footer > ul > li > a{
   font-family: 'Combo';
   font-size: 1.3rem;
 }
+
 /* images footer */
 .img-footer{
   position: absolute;
@@ -366,7 +374,7 @@ footer > ul > li > a{
 
 /* search card */
 .search-card{
-  background-color: #2c3e509a;
+  background-color: #ebeb8194;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -387,6 +395,7 @@ footer > ul > li > a{
 .search-card > a >.cocktail >h3{
   font-family: 'Combo';
 }
+
 /* menu */
 nav {
   padding: 40px 5px 40px 40px;
@@ -401,7 +410,6 @@ nav {
   position: relative;
   z-index: 5;
 }
-
 nav a {
   font-weight: bold;
   color: #2c3e50;
@@ -410,13 +418,14 @@ nav a {
   font-size: 1.3rem;
   font-family: 'Combo';
 }
-
 nav a.router-link-exact-active {
   color: #60BFCF;
 }
-
+body{
+  margin: 0px;
+}
 body #app{
-  background: linear-gradient(#F29375, #EEDF91);
+  background: linear-gradient(#F29375 20%,  #EEDF91 92%);
 }
 nav >  a  > .logo-header{
   width:150px;
@@ -435,43 +444,13 @@ nav input{
   top: 30px;
   left: 70%;
 }
-#btn-loup{
-  cursor: pointer;
-  display: none;
-}
-#btn-loup:hover{
-  transform: scale(1.1);
-}
+
+/* media query */
 @media screen and (max-width:1120px) {
   nav input{
     width: 200px;
   }
 }
-@media screen and (max-width: 770px) {
-  nav input{
-    width: 150px;
-  }
-}
-@media screen and (max-width: 670px) {
-  #btn-loup{
-    display: block;
-    position: absolute;
-    right: 25%;
-    width: 45px;
-    top: 30%;
-  }
-  #inputs{
-    display: none;
-    margin-top: 120px;
-  }
-  .search-card{
-    padding: 0;
-  }
-  #links{
-    width: 250px;
-  }
-}
-/* media query */
 @media screen and (max-width: 1090px) {
   .slider-text{
     width: 40%;
@@ -513,14 +492,28 @@ nav input{
     left: -150px;
   }
 }
+@media screen and (max-width: 770px) {
+  nav input{
+    width: 150px;
+  }
+}
 @media screen and (max-width:750px){
   .texte{
     font-size: 0.8rem;
     margin-left: 30px;
+    width: 80%;
   }
   .pasteque{
     width: 250px;
     left: -150px;
+  }
+}
+@media screen and (max-width: 670px) {
+  .search-card{
+    padding: 0;
+  }
+  #links{
+    width: 250px;
   }
 }
 @media screen and (max-width: 655px){
@@ -546,16 +539,16 @@ nav input{
   .slider-text{
     width: 60%;
   }
+  nav{
+    width: 55%;
+  }
 }
 @media screen and (max-width: 590px){
   .slider-text{
     width: 70%;
   }
-  /* .carousel > .carousel__viewport{
-    width: 280px;
-  } */
   .carousel img{
-    width: 250px;
+    width: 200px;
   }
   .carousel > .carousel__next{
     right: 70px;
@@ -567,6 +560,43 @@ nav input{
 @media screen and (max-width: 500px){
   .ingredients{
     padding: 0;
+  }
+  nav{
+    width: 45%;
+    padding-left: 10px;
+  }
+  nav > a > .logo-header{
+    width: 100px;
+  }
+  .texte{
+    width: 70%;
+  }
+  .carousel img{
+    width: 150px;
+  }
+  .carousel > .carousel__next{
+    right: 160px;
+    top: 40%;
+  }
+  .carousel > .carousel__prev{
+    left: 80px;
+    top: 40%;
+  }
+  .carousel > .carousel__viewport > .carousel__track > .carousel__slide{
+    width: 70%;
+    margin-left: -20px;
+  }
+  .citron{
+    top: 6%;
+  }
+  .slider-text{
+    margin-left: 40px;
+  }
+  .slider-text h3 {
+    width: 250px;
+  }
+  .slider-text h2 {
+    width: 250px;
   }
 }
 @media screen and (max-width: 420px){
@@ -584,6 +614,27 @@ nav input{
   .second-part-title{
     font-size: 1.8rem;
     width: 300px;
+  }
+  nav input{
+    width: 100px;
+  }
+  .carousel > .carousel__next{
+    right: 180px;
+    top: 40%;
+  }
+  .carousel > .carousel__prev{
+    left: 60px;
+    top: 40%;
+  }
+  .carousel > .carousel__viewport > .carousel__track > .carousel__slide{
+    width: 70%;
+    margin-left: -30px;
+  }
+  .slider-text h3 {
+    margin-left: -30px;
+  }
+  .slider-text h2 {
+    margin-left: -30px;
   }
 }
 

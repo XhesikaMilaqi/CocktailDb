@@ -1,13 +1,10 @@
 <template class="body">
-  <!-- <div class="ingrdients" v-if="searchI !== ''">
-    <AllIngredients v-for="item in dataList" :key="item.idIngredient" :idIngredient="item.idIngredient" :strIngredient1="item.strIngredient1"></AllIngredients>
-  </div> -->
   <div id="links">
     <router-link to="/">Home</router-link>
     <router-link to="/nonalcoholic">Non-Alcoholic</router-link>
   </div>
-  <img src="./assets/img/loup.png" alt="loup-recherche" id="btn-loup">
   <div class="around">
+    <!-- <img src="./assets/img/loup.png" alt="loup-recherche" id="btn-loup"> -->
     <button class="box b1">
       <div class="container-lignes">
         <div class="ligne"></div>
@@ -16,44 +13,8 @@
       </div>
     </button>
   </div>
-  <router-view :key="$route.fullpath"/>
+  <router-view :key="$route.fullPath"/>
 </template>
-
-<script>
-// import AllCocktails from '@/components/AllCocktails.vue'
-import ApiService from '@/services/ApiService.js'
-// import AllIngredients from '@/components/AllIngredients.vue'
-
-const apiService = new ApiService()
-
-export default {
-  name: 'App',
-  components: {
-    // AllCocktails
-    // AllIngredients
-  },
-  data () {
-    return {
-      dataList: null
-    }
-  },
-  mounted () {
-    this.AllIngredients()
-  },
-  methods: {
-    async AllIngredients () {
-      const resi = await apiService.getListIngredient()
-      const listI = await resi.json()
-      this.dataList = listI.drinks.slice(0, 1)
-    },
-    async searchIngredient (searchList) {
-      const res = await apiService.getSearchIngredient(searchList)
-      const rechercheI = await res.json()
-      this.dataI = rechercheI.ingredients
-    }
-  }
-}
-</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Combo&display=swap');
@@ -67,6 +28,14 @@ export default {
 }
 .around{
   position: relative;
+}
+.around > #btn-loup{
+  cursor: pointer;
+  display: none;
+  z-index: 22;
+}
+.around > #btn-loup:hover{
+  transform: scale(1.1);
 }
 .box{
   margin: 10px;
@@ -154,8 +123,9 @@ export default {
   top: 8px;
   width: 400px;
   height: 100vh;
-  background-color: #dad37ce3;
+  background-color: #dad47cbe;
   z-index: 10;
   padding-top: 100px;
+  backdrop-filter: blur(7px);
 }
 </style>
