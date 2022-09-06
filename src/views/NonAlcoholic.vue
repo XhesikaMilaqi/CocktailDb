@@ -78,6 +78,10 @@ export default {
   font-family: 'Combo';
   margin: 0 auto;
 }
+.latest img:hover{
+  rotate: 25deg;
+  transition: rotate 0.4s ease-in-out;
+}
 @media screen and (max-width:400px){
   .about > a > .latest > img{
     width: 250px;

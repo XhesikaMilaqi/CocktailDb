@@ -17,11 +17,11 @@
       <p class="instructions"><strong>Instructions : </strong>{{ data.strInstructions }}</p>
       <ul>
         <h3>Ingredients</h3>
-        <li>{{ data.strIngredient1}}</li>
-        <li>{{ data.strIngredient2}}</li>
-        <li>{{ data.strIngredient3}}</li>
-        <li>{{ data.strIngredient4}}</li>
-        <li>{{ data.strIngredient5}}</li>
+          <li>{{ data.strIngredient1}}</li>
+          <li>{{ data.strIngredient2}}</li>
+          <li>{{ data.strIngredient3}}</li>
+          <li>{{ data.strIngredient4}}</li>
+          <li>{{ data.strIngredient5}}</li>
       </ul>
     </div>
     <img src="../assets/img/fraise.png" alt="image fraise" class="fraise">

@@ -53,9 +53,9 @@
     </div>
     <!-- LISTE INGREDIENTS -->
     <h2 class="p-ingredients">Popular Ingredients</h2>
-    <div class="ingredients">
-      <AllIngredients v-for="items in dataI" :key="items.idIngredient" :idIngredient="items.idIngredient" :strIngredient1="items.strIngredient1"></AllIngredients>
-    </div>
+      <div class="ingredients">
+        <AllIngredients v-for="items in dataI" :key="items.idIngredient" :idIngredient="items.idIngredient" :strIngredient1="items.strIngredient1"></AllIngredients>
+      </div>
     <!-- FOOTER -->
     <footer>
       <ul>
@@ -129,6 +129,7 @@ export default defineComponent({
       const res = await apiService.getListIngredient()
       const listI = await res.json()
       this.dataI = listI.drinks.slice(0, 8)
+      console.log(listI.drinks.slice(0, 8))
     },
     async searchCocktail (search) {
       const res = await apiService.getSearchC(search)
@@ -147,6 +148,13 @@ export default defineComponent({
 /* carousel */
 .carousel img{
   width: 400px;
+  transition: all 0.4s ease-in-out;
+}
+.carousel img:hover{
+  -webkit-transform:scale(1.25);
+  transform:scale(1.25);
+  -webkit-transition:1s ease-in-out;
+  transition:1s ease-in-out;
 }
 .carousel > .carousel__viewport > .carousel__track  > .carousel__slide {
   display: flex;
@@ -324,7 +332,7 @@ export default defineComponent({
   margin: 0 auto;
 }
 .ingredients > .ingredient img:hover{
-  transform: scale(1.2);
+  transform: scale(1.1);
   transition: transform 0.4s ease-in-out;
 }
 
@@ -598,6 +606,15 @@ nav input{
   .slider-text h2 {
     width: 250px;
   }
+  .title-main{
+    width: 380px;
+    height: 100px;
+  }
+  .texte > h1{
+    width: 130%;
+    text-align: left;
+    float: left;
+  }
 }
 @media screen and (max-width: 420px){
   .list-card > a > .cocktail > img{
@@ -616,7 +633,7 @@ nav input{
     width: 300px;
   }
   nav input{
-    width: 100px;
+    width: 120px;
   }
   .carousel > .carousel__next{
     right: 180px;
@@ -635,6 +652,59 @@ nav input{
   }
   .slider-text h2 {
     margin-left: -30px;
+  }
+  .title-main{
+    width: 300px;
+  }
+  .texte > h1{
+    width: 120%;
+    backdrop-filter: blur(3px);
+    z-index: 99;
+  }
+}
+@media screen and (max-width: 390px){
+  .carousel > .carousel__viewport > .carousel__track > .carousel__slide{
+    margin-left: -40px;
+  }
+  .slider-text h3 {
+    margin-left: -40px;
+    font-size: 1rem;
+  }
+  .slider-text h2 {
+    margin-left: -40px;
+    font-size: 1.6rem;
+  }
+  .carousel > .carousel__next{
+    right: 200px;
+  }
+  .carousel > .carousel__prev{
+    left: 40px;
+  }
+  .title-main{
+    width: 250px;
+  }
+  .texte > h1{
+    width: 120%;
+  }
+}
+@media screen and (max-width:340px){
+  .carousel > .carousel__viewport > .carousel__track > .carousel__slide{
+    margin-left: -50px;
+  }
+  .slider-text h3 {
+    margin-left: -40px;
+    font-size: 0.8rem;
+    width: 220px;
+  }
+  .slider-text h2 {
+    margin-left: -60px;
+    font-size: 1.6rem;
+  }
+  .carousel > .carousel__next{
+    right: 220px;
+  }
+  .carousel > .carousel__prev{
+    left: 20px;
   }
 }
 

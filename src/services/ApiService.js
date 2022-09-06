@@ -15,8 +15,12 @@ export default class ApiService {
     return fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/search.php?i=${searchList}`)
   }
 
+  getIngredientId (idIngredient) {
+    return fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/search.php?i=vodka${idIngredient}`)
+  }
+
   getListIngredient () {
-    return fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list')
+    return fetch('https://www.thecocktaildb.com/api/json/v2/9973533/list.php?i=list')
   }
 
   getDetails (id) {

@@ -2,6 +2,7 @@
   <div id="links">
     <router-link to="/">Home</router-link>
     <router-link to="/nonalcoholic">Non-Alcoholic</router-link>
+    <router-link to="/IngredientsView">Ingredients</router-link>
   </div>
   <div class="around">
     <!-- <img src="./assets/img/loup.png" alt="loup-recherche" id="btn-loup"> -->
@@ -18,6 +19,9 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Combo&display=swap');
+.ingredient:hover .test{
+  display: block;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -112,7 +116,7 @@
   text-decoration: none;
   font-family: 'Combo';
   color: black;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 #links{
   display: none;
