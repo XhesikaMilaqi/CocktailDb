@@ -30,6 +30,41 @@
     <img src="../assets/img/feuille-petit.png" alt="image petite feuille" class="feuille feuille-p">
     <img src="../assets/img/raisins.png" alt="image raisins" class="raisins">
   </div>
+  <button @click="showModal = true" class="button">Create a cocktail</button>
+  <transition name="fade" appear>
+    <div class="modal-overlay"
+      v-if="showModal"
+      @click="showModal = false">
+    </div>
+  </transition>
+  <transition name="pop" appear>
+    <div class="modal"
+      role="dialog"
+      v-if="showModal"
+    >
+      <button @click="showModal = false" class="button-close"><img src="../assets/close.png" alt="close button"></button>
+      <div class="input-cocktail">
+        <h2>Create your cocktail</h2>
+        <label for="text">Name of cocktail : </label>
+        <input v-model="text"  @input="event => text = event.target.value"><br>
+        <label for="event">Category : </label>
+        <input v-model="text"  @input="event => text = event.target.value"><br>
+        <input type="checkbox" v-model="checked"><label for="checkbox">Alcoholic</label> <br>
+        <label for="checkbox">Non Alcoholic</label><input type="checkbox"> <br> <br>
+        <label for="text">Instruction : </label> <br> <textarea v-model="text" cols="30" rows="10"></textarea><br>
+        <label for="text">Ingredients : </label>
+        <ul>
+          <li><input type="text"></li>
+          <li><input type="text"></li>
+          <li><input type="text"></li>
+        </ul>
+        <input type="file" name="avatar" id="avatar">
+        <br><br>
+      </div>
+      <input type="button" name="save" value="Save">
+      <button @click="showModal = false">Cancel</button>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -47,7 +82,8 @@ export default {
       data: null,
       dataP: null,
       search: '',
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      showModal: false
     }
   },
   created () {
@@ -153,6 +189,82 @@ export default {
 }.details-i > h4{
   text-align: left;
   font-size: 1.6rem;
+}
+/* modal */
+.button {
+  border: none;
+  color: #FFF;
+  background: #42b983;
+  appearance: none;
+  font: inherit;
+  font-size: 1.6rem;
+  padding: .3em 1em;
+  border-radius: .3em;
+  cursor: pointer;
+  margin-bottom: 50px;
+}
+.button-close{
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.modal {
+  position: absolute;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  text-align: center;
+  width: fit-content;
+  height: fit-content;
+  max-width: 30em;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  background: #FFF;
+  z-index: 999;
+  transform: none;
+}
+.modal h1 {
+  margin: 0 0 1rem;
+}
+
+.modal-overlay {
+  content: '';
+  position: absolute;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 998;
+  background: #2c3e50;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+/* ---------------------------------- */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .4s linear;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.pop-enter-active,
+.pop-leave-active {
+  transition: transform 0.4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
+}
+
+.pop-enter,
+.pop-leave-to {
+  opacity: 0;
+  transform: scale(0.3) translateY(-50%);
 }
 /* media query */
 @media screen and (max-width: 1200px){
