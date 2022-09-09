@@ -30,7 +30,7 @@
     <img src="../assets/img/feuille-petit.png" alt="image petite feuille" class="feuille feuille-p">
     <img src="../assets/img/raisins.png" alt="image raisins" class="raisins">
   </div>
-  <button @click="showModal = true" class="button">Create a cocktail</button>
+  <!-- <button @click="showModal = true" class="button">Create a cocktail</button>
   <transition name="fade" appear>
     <div class="modal-overlay"
       v-if="showModal"
@@ -62,9 +62,9 @@
         <br><br>
       </div>
       <input type="button" name="save" value="Save">
-      <button @click="showModal = false">Cancel</button>
-    </div>
-  </transition>
+      <button @click="showModal = false">Cancel</button> -->
+    <!-- </div> -->
+  <!-- </transition> -->
 </template>
 
 <script>
